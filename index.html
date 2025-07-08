@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    p.small-caps {
+        font-variant: small-caps;
+    }
+    .table-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .centered-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 90%;
+    }
+    .centered-table th, .centered-table td {
+        text-align: center;
+        padding: 8px;
+        vertical-align: middle; /* Centers content vertically */
+    }
+    .centered-table thead th {
+        border-bottom: 2px solid black;
+    }
+    .centered-table tfoot td {
+        border-top: 2px solid black;
+    }
+    .centered-table caption {
+      text-align: justify;
+    }
+    .centered-line {
+      display: block;
+      text-align: center;
+    }
+    .image-table {
+    width: 100%;
+  }
+  /* .image-table img {
+    width: 100%;
+    max-width: 100px; 
+  }
+  */
+  .image-table th, .image-table td {
+    text-align: center;
+  }
+  .caption {
+    text-align: justify;
+    margin-top: 10px;
+  }
+  /* Add the media queries here */
+  @media only screen and (max-width: 800px) {
+    .image-table img {
+      max-width: 37px; /* smaller max-width for mobile devices */
+    }
+    .image-table td {
+    font-size: 8px; /* Smaller font size for small screens */
+    }
+    .image-table th {
+    font-size: 8px; /* Smaller font size for small screens */
+    }
+    .centered-table td {
+    font-size: 8px; /* Smaller font size for small screens */
+    }
+    .centered-table th {
+    font-size: 8px; /* Smaller font size for small screens */
+    }
+    .centered-table caption {
+      font-size: 10px;
+    }
+    .image-table caption {
+      font-size: 10px;
+    }
+    .caption {
+      font-size: 10px
+    }
+  }
+
+  @media only screen and (min-width: 801px) {
+    .image-table img {
+      max-width: 100px; /* larger max-width for larger screens */
+    }
+  }
+  .singmusketeers {
+    font-family: "Bokor", system-ui;
+    font-weight: 400;
+    font-style: normal;
+  }
+  </style>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Informed by the nature and linguistics of signed languages, our proposed method focuses on just the most relevant parts in a signing video: the face, hands and body posture of the signer.">
+  <meta name="keywords" content="ASL, American Sign Language, self-supervised learning, transformer, DINO, sign language">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SignMusketeers: An Efficient Multi-Stream Approach for Sign Language Translation at Scale</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script> -->
+  <!-- <script> 
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bokor&family=Corinthia:wght@400;700&family=Hurricane&display=swap" rel="stylesheet">
+  <!-- <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.innerHTML = document.body.innerHTML.replace(/SignMusketeers/g, '<span class="signmusketeers">SignMusketeers</span>');
+    });
+  </script> -->
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"> <span class="singmusketeers">SignMusketeers</span>: An Efficient Multi-Stream Approach for Sign Language Translation at Scale</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://shesterg.github.io/">Shester Gueuwou</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://xiaodan.io/">Xiaodan Du</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://home.ttic.edu/~gregory/">Greg Shakhnarovich</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://home.ttic.edu/~klivescu/">Karen Livescu</a>
+            </span>
+            
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Toyota Technological Institute at Chicago,</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2406.06907"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ShesterG/SignMusketeers"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <!-- <span>Code&nbsp;</span> <p style="color:#39e139">New!</p> -->
+                  <span>Code&nbsp;</span>
+                  </a>
+              </span>
+              
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img id="teaser" src="./static/images/new_pipe_whole.svg" alt="Teaser" style="width: 100%; height: auto;">      
+      <h2 class="subtitle has-text-centered">
+        Overview of our approach to sign language translation.  
+      </h2>
+      <p class="subtitle">
+        We parse every frame of the signing video with off-the-shelf face and hand detectors. 
+        <br>
+        (a) In phase 1 (left) we start from pre-trained DINOv2 visual feature extractors and continue training them with a DINO loss on cropped face boxes and hand boxes, producing two separate DINOv2s (DINOv2-F for the face and DINOv2-H for the hands). 
+        This stage is purely self-supervised from random video frames. 
+        <br>
+        (b) In phase 2 (right), fixing the two pre-trained feature extractors, we add a (learned) feature extractor for coarse body pose estimated by an off-the-shelf method, 
+        concatenate and project the features for each frame, and fine-tune a T5 model mapping the resulting sequence of frame features to English text. 
+        This stage is supervised by video clips paired with translations.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            A persistent challenge in sign language video processing, including the task of sign language to written language translation, 
+            is how we learn representations of sign language in an effective and efficient way that can preserve the important attributes of these languages, 
+            while remaining invariant to irrelevant visual differences. 
+            Informed by the nature and linguistics of signed languages, 
+            our proposed method focuses on just the most relevant parts in a signing video: 
+            the face, hands and body posture of the signer. 
+            However, instead of using pose estimation coordinates from off-the-shelf pose tracking models, 
+            which have inconsistent performance for hands and faces, 
+            we propose to learn the complex handshapes and rich facial expressions of sign languages in a self-supervised fashion. 
+            Our approach is based on learning from individual frames (rather than video sequences) and is therefore much more efficient than prior work on sign language pre-training. 
+            Compared to a recent model that established a new state of the art in sign language translation on the How2Sign dataset, our approach yields similar translation performance, using less than 3% of the compute.
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</section>
+
+<!-- Put a section of centered image with caption -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <h2 class="title is-3">Overview</h2> -->
+         
+        <img id="teaser" src="./static/images/bubble_plot.svg" alt="bubble graph" style="width: 100%; height: auto;">
+        <p class="subtitle">
+          Comparison of data and computation usage between SignMusketeers (Ours) and Rust et al. 
+          <!-- <br> -->
+          Horizontal axis: GPU-Hours for the entire training schedule i.e., self-supervised training and supervised training. 
+          <!-- <br> -->
+          Vertical axis: BLEU score. Bubble size: number of frames (in millions) used during the pre-training stage. 
+          <!-- <br> -->
+          Labels: the first line is the pre-training protocol and the second line is the supervised training protocol. 
+          The number in parentheses is the number of pre-training epochs. 
+        </p>
+        <p class="subtitle is-6">
+          YT: YouTube-ASL, H2S: How2Sign; 
+          X\(\to\)Y means train on X then fine-tune on Y; X+Y means train on the union X\(\cup\)Y. 
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{gueuwou2025signmusketeers,
+      title={Signmusketeers: An efficient multi-stream approach for sign language translation at scale},
+      author={Gueuwou, Shester and Du, Xiaodan and Shakhnarovich, Greg and Livescu, Karen},
+      journal={Findings of the Association for Computational Linguistics: ACL 2025},
+      year={2025}
+}
+</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns">
+      <div class="column ">
+        <h2 class="title is-3">Followup Work:</h2>
+        <div class="content ">
+          <p>
+            <a href="http://shubert.pals.ttic.edu">[ACL 2025] SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction</a>
+          </p>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website source code based on the <a
+              href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> website repo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
